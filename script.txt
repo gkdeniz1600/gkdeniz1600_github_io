@@ -1,0 +1,39 @@
+<script>
+  // Sayfa kaydırma için tuşlara basıldığında çalışacak fonksiyon
+  window.addEventListener('keydown', function (event) {
+    // Yukarı ve aşağı tuşları
+    if (event.key === 'ArrowDown') {
+      window.scrollBy(0, 100); // Aşağı kaydırma
+    } else if (event.key === 'ArrowUp') {
+      window.scrollBy(0, -100); // Yukarı kaydırma
+    }
+  });
+
+  // Fare ile kaydırma için
+  let isMouseDown = false;
+  let startY;
+  let scrollTop;
+
+  const scrollableArea = document.body; // Sayfa gövdesi kaydırılabilir olacak
+
+  scrollableArea.addEventListener('mousedown', (e) => {
+    isMouseDown = true;
+    startY = e.pageY - scrollableArea.offsetTop;
+    scrollTop = scrollableArea.scrollTop;
+  });
+
+  scrollableArea.addEventListener('mouseleave', () => {
+    isMouseDown = false;
+  });
+
+  scrollableArea.addEventListener('mouseup', () => {
+    isMouseDown = false;
+  });
+
+  scrollableArea.addEventListener('mousemove', (e) => {
+    if (!isMouseDown) return;
+    const y = e.pageY - scrollableArea.offsetTop;
+    const walk = (y - startY) * 3; // Kaydırma hızını ayarlayın
+    scrollableArea.scrollTop = scrollTop - walk;
+  });
+</script>
